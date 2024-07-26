@@ -1,17 +1,17 @@
 ---
-- name: Ejecutar el comando "ip a"
+- name: Ejecutar el comando ip a
   hosts: all
   vars:
-      commands:
-      - "ip a"
-      - "ip route"
+      shell: |
+        ip a
+        ip route
+
   tasks:
-    - name: Ejecutar el comando "ip a"
-      ansible.builtin.shell: "{{ item }}"
+    - name: Ejecutar el comando ip a
       register: command_output
-      with_items: "{{ commands }}"
+      with_items: "{{ shell }}"
       changed_when: false
 
-    - name: Mostrar la salida del comando "ip a"
+    - name: Mostrar la salida del comando ip a
       debug:
         msg: "{{ command_output.stdout_lines }}"
