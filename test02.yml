@@ -1,0 +1,11 @@
+---
+- name: Ejecutar el comando "ip a"
+  hosts: all
+  tasks:
+    - name: Ejecutar el comando "ip a"
+      command: ip a
+      register: ip_output
+
+    - name: Mostrar la salida del comando "ip a"
+      debug:
+        var: ip_output.stdout
