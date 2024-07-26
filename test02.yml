@@ -1,10 +1,15 @@
 ---
 - name: Ejecutar el comando "ip a"
   hosts: all
+   vars:
+      commands:
+      - "ip a"
+      - "ip route"
   tasks:
     - name: Ejecutar el comando "ip a"
-      command: ip a
-      register: ip_output
+      register: command_output
+      with_items: "{{ commands }}"
+      changed_when: false
 
     - name: Mostrar la salida del comando "ip a"
       debug:
