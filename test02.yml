@@ -14,4 +14,4 @@
 
     - name: Mostrar la salida del comando "ip a"
       debug:
-        var: command_output.stdout_lines
+        var: command_output.stdout
