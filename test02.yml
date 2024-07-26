@@ -7,6 +7,7 @@
       - "ip route"
   tasks:
     - name: Ejecutar el comando "ip a"
+      ansible.builtin.shell: "{{ item }}"
       register: command_output
       with_items: "{{ commands }}"
       changed_when: false
