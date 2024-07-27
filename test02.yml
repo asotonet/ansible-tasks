@@ -18,16 +18,16 @@
         content: "{{ command_output.stdout_lines | to_json }}"
         dest: "/tmp/{{ inventory_hostname }}_output.json"
 
-- name: Recolectar resultados en localhost
-  hosts: all
-  tasks:
-    - name: Crear directorio para resultados
-      file:
-        path: /root/outputs
-        state: directory
-
-    - name: Obtener archivos desde hosts remotos
-      fetch:
-        src: "/tmp/{{ inventory_hostname }}_output.json"
-        dest: "/root/outputs/"
-        flat: yes
+#- name: Recolectar resultados en localhost
+#  hosts: all
+#  tasks:
+#    - name: Crear directorio para resultados
+#      file:
+#        path: /root/outputs
+#        state: directory
+#
+#    - name: Obtener archivos desde hosts remotos
+#      fetch:
+#        src: "/tmp/{{ inventory_hostname }}_output.json"
+#        dest: "/root/outputs/"
+#        flat: yes
