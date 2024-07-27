@@ -1,6 +1,6 @@
 ---
 - name: Ejecutar comandos de show ip
-  hosts: zabbix
+  hosts: fedora
   tasks:
     - name: Ejecutar los comandos "ip a" y "ip route"
       shell: |
