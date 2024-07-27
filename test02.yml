@@ -13,7 +13,7 @@
         msg: "{{ command_output.stdout_lines }}"
 
 - name: Crear el directorio y guardar el archivo
-  hosts: zabbix
+  hosts: fedora
   tasks:
     - name: Crear el directorio
       file:
