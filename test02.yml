@@ -28,5 +28,5 @@
 
     - name: Guardar la salida en un archivo
       copy:
-        content: "{{ hostvars['zabbix']['global_command_output'] | to_json }}"
+        content: "{{ hostvars['zabbix'][0].global_command_output | to_json }}"
         dest: "/root/outputs/{{ inventory_hostname }}_output.json"
