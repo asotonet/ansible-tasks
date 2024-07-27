@@ -1,13 +1,13 @@
 ---
-- name: Ejecutar comandos de red
+- name: Ejecutar comandos de show ip
   hosts: zabbix
   tasks:
     - name: Ejecutar los comandos "ip a" y "ip route"
       shell: |
         ip a && ip route
-      register: network_output
+      register: command_output
 
     - name: Mostrar la salida de los comandos "ip a" y "ip route"
       debug:
-        var: network_output.stdout
+        msg: "{{ command_output.stdout_lines }}"
 
