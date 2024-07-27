@@ -1,26 +1,27 @@
 ---
 - name: Ejecutar el comando ip a
-  hosts: zabbix
+  hosts: all
   tasks:
     - name: Ejecutar el comando ip a y ip route
       shell: |
         ip a && ip route
       register: command_output
       changed_when: false
+      when: "'zabbix' in group_names"
 
     - name: Mostrar la salida del comando ip a
       debug:
         msg: "{{ command_output.stdout_lines }}"
+      when: "'zabbix' in group_names"
 
-- name: Crear el directorio y guardar el archivo
-  hosts: fedora
-  tasks:
     - name: Crear el directorio
       file:
         path: /root/outputs
         state: directory
+      when: "'fedora' in group_names"
 
     - name: Guardar la salida en un archivo
       copy:
         content: "{{ command_output.stdout_lines | to_json }}"
         dest: "/root/outputs/{{ inventory_hostname }}_output.json"
+      when: "'fedora' in group_names"
