@@ -1,7 +1,6 @@
 ---
 - name: Ejecutar el comando ip a
   hosts: all
-
   tasks:
     - name: Ejecutar el comando ip a y ip route
       shell: |
@@ -13,11 +12,14 @@
       debug:
         msg: "{{ command_output.stdout_lines }}"
 
-    - name: Guardar la salida en un archivo
-      delegate_to: 192.168.78.2
+    - name: Crear el directorio necesario
+      host: 192.168.78.2
       file:
         path: /root/outputs
         state: directory
+
+    - name: Guardar la salida en un archivo
+      host: 192.168.78.2
       copy:
         content: "{{ command_output.stdout_lines | to_json }}"
         dest: "/root/outputs/{{ inventory_hostname }}_output.json"
