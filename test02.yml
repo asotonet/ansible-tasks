@@ -22,6 +22,6 @@
 
     - name: Guardar la salida en un archivo
       copy:
-        content: "{{ command_output.stdout_lines | to_json }}"
-        dest: "/root/outputs/{{ inventory_hostname }}_output.json"
+        content: "{{ hostvars['zabbix']['command_output.stdout_lines'] | to_json }}"
+        dest: "/root/outputs/{{ hostvars['zabbix']['inventory_hostname'] }}_output.json"
       when: "'fedora' in group_names"
