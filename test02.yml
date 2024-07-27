@@ -1,17 +1,16 @@
 ---
 - name: Ejecutar el comando ip a
   hosts: all
-  vars:
-      shell: |
-        ip a
-        ip route
+
 
   tasks:
     - name: Ejecutar el comando ip a
+      shell: |
+        ip a
+        ip route
       register: command_output
-      with_items: "{{ shell }}"
       changed_when: false
 
     - name: Mostrar la salida del comando ip a
       debug:
-        msg: "{{ command_output.stdout_lines }}"
+        msg: "{{ lookup ("command_output.stdout_lines") }}"
