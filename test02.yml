@@ -2,9 +2,8 @@
 - name: Ejecutar el comando ip a
   hosts: all
 
-
   tasks:
-    - name: Ejecutar el comando ip a
+    - name: Ejecutar el comando ip a y ip route
       shell: |
         ip a && ip route
       register: command_output
@@ -12,16 +11,23 @@
 
     - name: Mostrar la salida del comando ip a
       debug:
-        msg: "{{ command_output.stdout_lines}}"
+        msg: "{{ command_output.stdout_lines }}"
 
-    - name: Concatenar la salida de todos los comandos
-      ansible.builtin.set_fact:
-        all_outputs: "{{ all_outputs | default([]) + [item.stdout_lines] }}"
-      with_items: "{{ command_output.results }}"
+    - name: Guardar la salida en un archivo temporal
+      copy:
+        content: "{{ command_output.stdout_lines | to_json }}"
+        dest: "/tmp/{{ inventory_hostname }}_output.json"
 
-    - name: Convertir la salida concatenada a JSON y guardar en archivo
-      ansible.builtin.local_action:
-        module: copy
-        content: "{{ all_outputs | to_json }}"
-        dest: "/root/{{ inventory_hostname }}.json"
-#      delegate_to: localhost
+- name: Recolectar resultados en localhost
+  hosts: localhost
+  tasks:
+    - name: Crear directorio para resultados
+      file:
+        path: /root/outputs
+        state: directory
+
+    - name: Obtener archivos desde hosts remotos
+      fetch:
+        src: "/tmp/{{ inventory_hostname }}_output.json"
+        dest: "/root/outputs/"
+        flat: yes
