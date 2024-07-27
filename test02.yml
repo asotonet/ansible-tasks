@@ -19,7 +19,7 @@
         dest: "/tmp/{{ inventory_hostname }}_output.json"
 
 - name: Recolectar resultados en localhost
-  hosts: localhost
+  hosts: all
   tasks:
     - name: Crear directorio para resultados
       file:
