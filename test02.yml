@@ -12,14 +12,14 @@
       debug:
         msg: "{{ command_output.stdout_lines }}"
 
-    - name: Crear el directorio necesario
-      host: 192.168.78.2
+- name: Crear el directorio necesario
+  host: 192.168.78.2
+  tasks:
       file:
         path: /root/outputs
         state: directory
 
     - name: Guardar la salida en un archivo
-      host: 192.168.78.2
       copy:
         content: "{{ command_output.stdout_lines | to_json }}"
         dest: "/root/outputs/{{ inventory_hostname }}_output.json"
