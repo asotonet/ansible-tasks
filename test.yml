@@ -1,6 +1,6 @@
 ---
 - name: Ejecutar comandos de show ip
-  hosts: fedora
+  hosts: fedora-server
   tasks:
     - name: Ejecutar los comandos "ip a" y "ip route"
       shell: |
