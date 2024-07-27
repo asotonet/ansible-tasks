@@ -12,10 +12,10 @@
       debug:
         msg: "{{ command_output.stdout_lines }}"
 
-- name: Crear el directorio necesario
+- name: Crear el directorio y guardar el archivo
   host: 192.168.78.2
   tasks:
-    - name:
+    - name: Crear el directorio
       file:
         path: /root/outputs
         state: directory
