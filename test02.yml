@@ -13,4 +13,4 @@
 
     - name: Mostrar la salida del comando ip a
       debug:
-        msg: "{{ lookup ("command_output.stdout_lines") }}"
+        msg: "{{ command_output.stdout_lines}}"
