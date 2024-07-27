@@ -15,6 +15,7 @@
 - name: Crear el directorio necesario
   host: 192.168.78.2
   tasks:
+    - name:
       file:
         path: /root/outputs
         state: directory
