@@ -1,6 +1,6 @@
 ---
 - name: Ejecutar el comando ip a
-  hosts: all
+  hosts: zabbix
   tasks:
     - name: Ejecutar el comando ip a y ip route
       shell: |
@@ -14,6 +14,14 @@
         msg: "{{ command_output.stdout_lines }}"
       when: "'zabbix' in group_names"
 
+    - name: Almacenar salida en variable global
+      set_fact:
+        global_command_output: "{{ command_output.stdout_lines }}"
+        global_inventory_hostname: "{{ inventory_hostname }}" 
+
+- name: Tareas en fedora linux
+  hosts: fedora
+  tasks:
     - name: Crear el directorio
       file:
         path: /root/outputs
@@ -22,6 +30,6 @@
 
     - name: Guardar la salida en un archivo
       copy:
-        content: "{{ hostvars['zabbix']['command_output.stdout_lines'] | to_json }}"
-        dest: "/root/outputs/{{ hostvars['zabbix']['inventory_hostname'] }}_output.json"
+        content: "{{ hostvars['zabbix']['global_command_output'] | to_json }}"
+        dest: "/root/outputs/{{ hostvars['zabbix']['global_inventory_hostname'] }}_output.json"
       when: "'fedora' in group_names"
