@@ -22,13 +22,13 @@
   hosts: all
   tasks:
     - name: Crear directorio para resultados en fedora
-      delegate_to: fedora
+      delegate_to: 192.168.78.2
       file:
         path: /root/outputs
         state: directory
-        
+
     - name: Enviar archivos a fedora
-      delegate_to: fedora
+      delegate_to: 192.168.78.2
       copy:
         src: "/tmp/{{ inventory_hostname }}_output.json"
         dest: "/root/outputs/{{ inventory_hostname }}_output.json"
