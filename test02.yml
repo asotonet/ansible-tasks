@@ -7,7 +7,6 @@
         ip a && ip route
       register: command_output
       changed_when: false
-      when: "'zabbix' in group_names"
 
     - name: Mostrar la salida del comando ip a
       debug:
@@ -17,7 +16,6 @@
     - name: Almacenar salida en variable global
       set_fact:
         global_command_output: "{{ command_output.stdout_lines }}"
-        global_inventory_hostname: "{{ inventory_hostname }}" 
 
 - name: Tareas en fedora linux
   hosts: fedora
@@ -31,5 +29,4 @@
     - name: Guardar la salida en un archivo
       copy:
         content: "{{ hostvars['zabbix']['global_command_output'] | to_json }}"
-        dest: "/root/outputs/{{ hostvars['zabbix']['global_inventory_hostname'] }}_output.json"
-      when: "'fedora' in group_names"
+        dest: "/root/outputs/{{ inventory_hostname }}_output.json"
