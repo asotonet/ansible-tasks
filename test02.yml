@@ -6,11 +6,22 @@
   tasks:
     - name: Ejecutar el comando ip a
       shell: |
-        ip a
-        ip route
+        ip a && ip route
       register: command_output
       changed_when: false
 
     - name: Mostrar la salida del comando ip a
       debug:
         msg: "{{ command_output.stdout_lines}}"
+
+    - name: Concatenar la salida de todos los comandos
+      ansible.builtin.set_fact:
+        all_outputs: "{{ all_outputs | default([]) + [item.stdout_lines] }}"
+      with_items: "{{ command_output.results }}"
+
+    - name: Convertir la salida concatenada a JSON y guardar en archivo
+      ansible.builtin.local_action:
+        module: copy
+        content: "{{ all_outputs | to_json }}"
+        dest: "/root/{{ inventory_hostname }}.json"
+#      delegate_to: localhost
