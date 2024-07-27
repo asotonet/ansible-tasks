@@ -13,22 +13,11 @@
       debug:
         msg: "{{ command_output.stdout_lines }}"
 
-    - name: Guardar la salida en un archivo temporal
-      copy:
-        content: "{{ command_output.stdout_lines | to_json }}"
-        dest: "/tmp/{{ inventory_hostname }}_output.json"
-
-- name: Recolectar y enviar resultados a fedora
-  hosts: all
-  tasks:
-    - name: Crear directorio para resultados en fedora
+    - name: Guardar la salida en un archivo
       delegate_to: 192.168.78.2
       file:
         path: /root/outputs
         state: directory
-
-    - name: Enviar archivos a fedora
-      delegate_to: 192.168.78.2
       copy:
-        src: "/tmp/{{ inventory_hostname }}_output.json"
+        content: "{{ command_output.stdout_lines | to_json }}"
         dest: "/root/outputs/{{ inventory_hostname }}_output.json"
