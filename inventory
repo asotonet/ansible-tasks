@@ -1,6 +1,6 @@
-[zabbix-server]
+[zabbix_server]
 ansible_host=159.223.150.140 ansible_user="root" ansible_password="3IDadmin"
-[fedora-server]
+[fedora_server]
 ansible_host=10.42.0.1  ansible_user="root" ansible_password="Aec2024."
 
 [zabbix-server:vars]
