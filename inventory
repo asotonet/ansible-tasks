@@ -2,6 +2,8 @@
 ansible_host=159.223.150.140 ansible_user="root" ansible_password="3IDadmin"
 [fedora_server]
 ansible_host=10.42.0.1  ansible_user="root" ansible_password="Aec2024."
-
-[zabbix-server:vars]
-global_command_output: []
+[Extreme_Switches]
+ansible_host=192.168.220.20 ansible_user="AEC" ansible_password="AECqazbkp2020!$."
+ansible_host=192.168.225.20 ansible_user="AEC" ansible_password="AECqazbkp2020!$."
+#[zabbix-server:vars]
+#global_command_output: []
